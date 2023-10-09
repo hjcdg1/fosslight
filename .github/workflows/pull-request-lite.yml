@@ -1,0 +1,34 @@
+name: Check build for pull requests in fosslight-lite
+
+on:
+  pull_request:
+    branches:
+      - "snu"
+    paths:
+      - "lite/**"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          cache: 'npm'
+
+      - name: Install dependencies
+        working-directory: ./lite
+        run: npm ci
+
+      - name: Check lint
+        working-directory: ./lite
+        run: npm run lint
+
+      - name: Build
+        working-directory: ./lite
+        run: npm run build:ci

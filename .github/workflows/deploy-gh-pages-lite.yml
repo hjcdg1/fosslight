@@ -1,0 +1,40 @@
+name: CD for fosslight-lite
+
+on:
+  push:
+    branches:
+      - "snu"
+    paths:
+      - "lite/**"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          cache: 'npm'
+
+      - name: Build artifacts
+        working-directory: ./lite
+        run: |
+          npm ci
+          npm run build:ci
+          touch ./out/.nojekyll
+
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: nextjs-artifact
+          path: ./lite/out
+          retention-days: 5
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
