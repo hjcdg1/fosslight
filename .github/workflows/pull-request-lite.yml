@@ -17,6 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
+        working-directory: ./lite
         uses: actions/setup-node@v3
         with:
           cache: 'npm'
