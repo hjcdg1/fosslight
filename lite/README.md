@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FOSSLight Hub Lite
 
-## Getting Started
+###### 2023.09 - 2023.12 (학부 4학년 수업 2人 팀 프로젝트)
 
-First, run the development server:
+<br />
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📌 Summary
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**LG 전자의 FOSSLight Hub 웹사이트를 사용자 기능 중심으로 리모델링한 웹사이트**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- LG 전자에서 관리자가 아닌 사용자를 위한 간소화 버전의 웹사이트 개발을 요청
+- 기존 FOSSLight Hub 프로젝트의 환경에 통합시켜 기존 사용자들의 접근성 확보
+- URL 쿼리 파라미터에 연동되는 정렬/필터 기능 및 모달 열기/닫기 기능 구현
+- 전반적인 UI/UX를 새롭게 설계하여 종합적인 사용성 개선
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+> 주요 기능: OSS, 라이선스, 보안 취약점 정보 조회, 프로젝트 내 각 OSS의 라이선스와 보안 취약점을 확인하는 Self-Check
 
-## Learn More
+<br />
 
-To learn more about Next.js, take a look at the following resources:
+## 🤔 Background
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+기존 FOSSLight Hub 웹사이트는 관리자와 사용자의 역할이 구분되어 있는데, 관리자가 아닌 사용자의 입장에서는 웹사이트가 너무 복잡하여 사용성이 떨어지는 문제가 있었어요. 이러한 이유로 LG 전자에서 사용자만을 고려한 FOSSLight Hub Lite의 개발을 요청주셨어요. 그리고 기존 웹사이트의 기능을 면밀히 검토하는 과정에서, 전반적인 UI/UX와 기능에서도 문제가 꽤 있으며 오래된 기술 스택으로 인해 유지보수가 온전히 되지 않고 있다는 점까지 파악했어요. 풀어야 할 숙제가 많지만 그만큼 배울 부분도 많다고 생각했어요.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<br />
 
-## Deploy on Vercel
+## 🔍 Meaning
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+기존 FOSSLight Hub를 사용하던 사용자들이 Lite 버전으로 쉽게 옮겨갈 수 있도록, 기존 FOSSLight Hub 프로젝트의 환경에 통합시키는 방법을 고민했어요. 결과적으로는 별도의 독립적인 Docker 컨테이너가 띄워지도록 기존 Docker Compose 설정에 포함시킴으로써 기존 사용자들의 접근성을 확보했어요.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+또한, 각종 검색 시에 활용할 수 있는 정렬/필터 기능과 각종 모달을 열고 닫는 행위에 URL 쿼리 파라미터를 연동하여 뒤로가기에 면역이 되도록 방문 히스토리를 관리했어요. 사실 기존에는 기본적인 클라이언트 사이드 네비게이션도 제대로 구현되어 있지 않아 어디서든 뒤로가기를 누르면 웹사이트 자체를 이탈하는 문제가 있었는데, Next.js의 기본 라우터로 이를 해결함과 동시에 방문 히스토리를 기반으로 추가적으로 편리한 기능을 구현했어요.
+
+그리고 전체적인 UI/UX를 새롭게 설계하여 종합적인 사용성을 개선했어요. 기존에 지원되지 않던 모바일 환경까지 고려하여 트렌디한 반응형 UI/UX를 디자인했을 뿐만 아니라, 동일한 기능은 동일한 기능으로 인식할 수 있도록 전반적인 일관성을 확보하고, 전체 검색과 같은 1-depth 간편 기능 등을 첨가하며 사용자가 원할 만한 기능을 고려했어요.
+
+> FOSSLight Hub Lite의 데모 영상은 [여기](https://www.youtube.com/watch?v=NZq7dNChH20)에서 확인하실 수 있어요.
+
+<br />
+
+## 🔨 Technology Stack(s)
+
+TypeScript, Next.js, Recoil, React-Query, React-Hook-Form, Tailwind CSS
+
+<br />
+
+## ⚙️ Setup & Usage
+
+#### 설치 및 실행
+
+- [FOSSLight Hub](https://github.com/fosslight/fosslight)에서 소스 코드를 다운로드해요.
+- Docker Compose를 이용하여 이미지를 빌드하고 컨테이너를 실행해요. (`docker-compose up --build`)
+
+#### 배포 환경 설정
+
+- 루트 디렉토리(`docker-compose.yml` 파일이 위치한 디렉토리)에 `.env` 파일을 생성하고 해당 파일 안에 `PRODUCT_MODE=true` 환경 변수를 정의해요.
+- Lite 웹이 기존 도메인의 하위 도메인을 사용한다고 가정할 때, 웹 서버에서 해당 하위 도메인으로부터 오는 요청들을 3000번 포트의 컨테이너(= Lite 웹 컨테이너)로 포워딩하고 나머지 요청들은 8180번 포트의 컨테이너로 포워딩하도록 설정 파일을 수정해요.
+- Lite 웹 컨테이너는 배포 환경을 가정하여 설계되어 있기 때문에, 개발 환경에서는 Lite 웹 컨테이너를 끄고 `/lite` 디렉토리에서 직접 개발 서버를 실행하여(`npm run dev`) 소스 코드의 수정이 즉각 반영되는 Hot-Reloading 기능을 활용하는 것을 권장해요.
